@@ -3,6 +3,8 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using GymClasses.Models;
+using System.Collections.Generic;
 
 namespace GymClasses.Models
 {
@@ -21,13 +23,18 @@ namespace GymClasses.Models
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext()
-            : base("DefaultConnection", throwIfV1Schema: false)
-        {
-        }
+            : base("GymDB", throwIfV1Schema: false)
+        { }
+        public DbSet<Models.GymClass> GymClasses { get; set; }
+
 
         public static ApplicationDbContext Create()
         {
             return new ApplicationDbContext();
         }
+
+        public virtual ICollection<GymClass> AttendedClasses { get; set; }
     }
+   
 }
+
